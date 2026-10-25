@@ -1,20 +1,38 @@
-@use "bootstrap-custom"
+@use "lib/mixins" as *
+@use "lib/variables" as *
 @use "typography"
 
-@tailwind utilities
 .brand-layout
-  display: flex
+  display: grid
+  grid-template-columns: minmax(0, 1fr)
   min-height: 100vh
 
+  +media(tablet)
+    grid-template-columns: 240px minmax(0, 1fr)
 .brand-sidebar
-  flex: 0 0 240px
-  padding: 32px 24px
-  border-right: 1px solid #e5e5e5
+  grid-column: 1
+  grid-row: auto
+  border-bottom: 1px solid $color-border
+
+  +media(tablet)
+    grid-row: 1 / 3
+    border-bottom: 0
+.brand-content
+  grid-column: 1
+  min-width: 0
+
+  +media(tablet)
+    grid-column: 2
+.brand-footer
+  grid-column: 1
+
+  +media(tablet)
+    grid-column: 2
 
 .brand-logo
   display: inline-block
   margin-bottom: 56px
-  color: #111
+  color: $color-text
   font-size: 24px
   font-weight: 700
   text-decoration: none
@@ -24,180 +42,135 @@
   padding: 0
   list-style: none
 
-  li
-    margin-bottom: 12px
+.brand-menu__item
+  margin-bottom: 12px
 
-  a
-    color: #111
-    text-decoration: none
+.brand-menu__link
+  color: $color-text
+  text-decoration: none
 
-    &:hover
-      text-decoration: underline
+  &:visited,
+  &:hover,
+  &:focus,
+  &:active
+    color: $color-text
 
-  sup
-    margin-left: 3px
-    color: #777
-    font-size: 10px
-
-.brand-content
-  flex: 1
-  min-width: 0
+  &:hover
+    text-decoration: underline
+.brand-menu__number
+  margin-left: 3px
+  color: #777
+  font-size: 10px
 
 .brand-hero
   display: block
   width: 100%
   height: auto
 
-@media (max-width: 767px)
-  .brand-layout
-    flex-direction: column
-
-  .brand-sidebar
-    flex: auto
-    border-right: 0
-    border-bottom: 1px solid #e5e5e5
-
-  .brand-logo
-    margin-bottom: 24px
 .brand-intro
   display: grid
-  grid-template-columns: 1fr 1fr
-  gap: 40px
-  padding: 40px
+  grid-template-columns: 1fr
+  gap: 24px
+  padding: 24px
 
-.brand-intro-title
+  +media(tablet)
+    grid-template-columns: 1fr 1fr
+    gap: 40px
+    padding: 40px
+.brand-intro__title
   margin: 0
   font-size: clamp(36px, 4vw, 64px)
   font-weight: 500
   line-height: 1.05
   letter-spacing: -2px
 
-.brand-intro-text
-  color: #575757
+.brand-intro__text
+  color: $color-text-muted
   font-size: 18px
   font-weight: 500
   line-height: 1.2
   letter-spacing: -0.01em
 
-  p
-    margin: 0 0 24px
 
-    &:last-child
-      margin-bottom: 0
+.brand-intro__paragraph
+  margin: 0 0 24px
 
-@media (max-width: 767px)
-  .brand-intro
-    grid-template-columns: 1fr
-    gap: 24px
-    padding: 24px
+  &:last-child
+    margin-bottom: 0
 .brand-contents
   display: grid
-  grid-template-columns: 1fr 1fr
-  gap: 40px
-  padding: 40px 40px 100px
-  border-top: 1px solid #e5e5e5
+  grid-template-columns: 1fr
+  gap: 32px
+  padding: 24px 24px 48px
+  border-top: 1px solid $color-border
 
-  h2
-    margin: 0
-    font-size: 24px
-    font-weight: 500
+  +media(tablet)
+    grid-template-columns: 1fr 1fr
+    gap: 40px
+    padding: 40px 40px 100px
+.brand-contents__title
+  margin: 0
+  font-size: 24px
+  font-weight: 500
 
-.brand-contents-list
+.brand-contents__list
   margin: 0
   padding: 0
   list-style: none
   counter-reset: contents
 
-  li
-    counter-increment: contents
-    margin-bottom: 12px
+.brand-contents__item
+  counter-increment: contents
+  margin-bottom: 12px
 
-  a
-    color: #111
-    font-size: 24px
-    text-decoration: none
+.brand-contents__link
+  color: #111
+  font-size: 24px
+  text-decoration: none
 
-    &::before
-      content: counter(contents, decimal-leading-zero) " "
-      color: #666
+  &::before
+    content: counter(contents, decimal-leading-zero) " "
+    color: #666
 
-    &:hover
-      text-decoration: underline
-
-@media (max-width: 767px)
-.brand-contents
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
-  gap: 32px
-  padding: 24px 24px 48px
-  display: grid
+  &:hover
+    text-decoration: underline
 .brand-section
-  display: grid
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
-  gap: 32px
-  padding: 32px 32px 120px
-  border-top: 1px solid #e5e5e5
-.brand-section-title
-  margin: 0
-  font-size: 60px
-  font-weight: 500
-  line-height: 1.1
-  letter-spacing: -0.01em
-  span
-    color: #ff5c00
-    margin-right: 12px
-.brand-section-content
-  color: #575757
-  font-size: 18px
-  font-weight: 500
-  line-height: 1.2
-  letter-spacing: -0.01em
+  padding: 24px 24px 48px
+  border-top: 1px solid $color-border
 
-  p
-    margin: 0 0 24px
+  +media(tablet)
+    padding: 32px 32px 120px
+.brand-section__paragraph
+  margin: 0 0 24px
 
-    &:last-child
-      margin-bottom: 0
-
-.brand-section-image
+  &:last-child
+    margin-bottom: 0
+.brand-section__image
   display: block
   width: 100%
   height: auto
-  margin-bottom: 30px
-
-@media (max-width: 767px)
-  .brand-section
-    grid-template-columns: 1fr
-    gap: 24px
-    padding: 24px 24px 48px
 .brand-personality
   display: flex
   flex-direction: column
   gap: 30px
-  padding: 32px 32px 120px
-  border-top: 1px solid #e5e5e5
+  padding: 24px 24px 48px
+  border-top: 1px solid $color-border
 
-.brand-personality-header
-  display: grid
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
-  gap: 32px
-
-.brand-personality-image
+  +media(tablet)
+    padding: 32px 32px 120px
+.brand-personality__image
   display: block
   width: 100%
   aspect-ratio: 966 / 500
   object-fit: cover
-
-@media (max-width: 767px)
-  .brand-personality
-    padding: 24px 24px 48px
-  .brand-personality-header
-    grid-template-columns: 1fr
-    gap: 24px
 .brand-tone
   display: grid
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
-  gap: 32px
+  grid-template-columns: 1fr
+  gap: 24px
 
+  +media(tablet)
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
+    gap: 32px
 .brand-subtitle
   margin: 0
   color: #000
@@ -206,125 +179,90 @@
   line-height: 1.2
   letter-spacing: -0.01em
 
-.brand-tone-examples
+.brand-tone__examples
   display: flex
   flex-direction: column
   gap: 40px
   letter-spacing: -0.01em
-  h4
-    margin: 0
-    color: #000
-    font-size: 15px
-    font-weight: 700
-    line-height: 1.2
-  p
-    margin: 0
-    color: #575757
-    font-size: 18px
-    font-weight: 500
-    line-height: 1.2
+.text-card__title
+  margin: 0
+  color: #000
+  font-size: 15px
+  font-weight: 700
+  line-height: 1.2
 
-@media (max-width: 767px)
-  .brand-tone
-    grid-template-columns: 1fr
-    gap: 24px
+.text-card__text
+  margin: 0
+  color: $color-text-muted
+  font-size: 18px
+  font-weight: 500
+
 .brand-sample
   display: flex
   flex-direction: column
-  gap: 64px
+  gap: 32px
   padding-top: 32px
-  border-top: 1px solid #e5e5e5
+  border-top: 1px solid $color-border
 
-.brand-sample-grid
+  +media(tablet)
+    gap: 64px
+.brand-sample__grid
   display: grid
-  grid-template-columns: repeat(4, minmax(0, 1fr))
+  grid-template-columns: 1fr
   gap: 32px
   letter-spacing: -0.01em
-  h4
-    margin: 0 0 24px
-    color: #000
-    font-size: 15px
-    font-weight: 700
-    line-height: 1.2
-  p
-    margin: 0
-    color: #575757
-    font-size: 18px
-    font-weight: 500
-    line-height: 1.2
 
-@media (max-width: 991px)
-  .brand-sample-grid
+  +media(tablet)
     grid-template-columns: repeat(2, minmax(0, 1fr))
 
-@media (max-width: 767px)
-  .brand-sample
-    gap: 32px
-  .brand-sample-grid
-    grid-template-columns: 1fr
+  +media(desktop)
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+.brand-sample__title
+  margin-bottom: 24px
 .logo-section
-  padding: 32px 32px 120px
   display: flex
   flex-direction: column
   gap: 30px
+  padding: 24px 16px 60px
 
-.logo-section-header
-  display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
-  gap: 32px
-  align-items: start
+  +media(tablet)
+    padding: 32px 32px 120px
 
-.logo-section-title
-  margin: 0
-  font-size: 60px
-  font-weight: 500
-  line-height: 1.1
-  letter-spacing: -0.01em
-
-  span
-    color: #ff5500
-
-.logo-section-description
-  color: #575757
-  font-size: 18px
-  line-height: 1.2
-
-  p
+.logo-section__paragraph
     margin: 0
 
-  p + p
-    margin-top: 24px
+
 .logo-diagrams
-  display: flex
-  flex-direction: column
-  gap: 64px
+    display: flex
+    flex-direction: column
+    gap: 32px
+
+    +media(tablet)
+      gap: 64px
 .logo-diagram:first-child
   padding-top: 40px
-.logo-diagram-title
+.logo-diagram__title
   margin: 0 0 10px
   font-size: 20px
   font-weight: 500
   line-height: 1.3
 
-.logo-diagram-image
+.logo-diagram__image
   display: block
   width: 100%
   height: auto
-.logo-incorrect-grid
+.logo-incorrect__grid
   display: grid
-  grid-template-columns: repeat(3, minmax(0, 1fr))
+  grid-template-columns: repeat(2, minmax(0, 1fr))
   column-gap: 16px
   row-gap: 32px
-.logo-incorrect-item
+
+  +media(tablet)
+    grid-template-columns: repeat(3, minmax(0, 1fr))
+.logo-incorrect__item
   margin: 0
   min-width: 0
-
-  > img
-    display: block
-    width: 100%
-    height: auto
-
-  img
+  .logo-incorrect__image
     display: block
     width: 100%
     height: auto
@@ -337,56 +275,27 @@
     font-size: 12px
     line-height: 1.3
 
-.logo-incorrect-item .logo-incorrect-icon
+.logo-incorrect__item .logo-incorrect__icon
     display: block
     width: 16px
     height: 16px
     flex: 0 0 16px
-@media (max-width: 767px)
-  .logo-section
-    padding: 24px 16px 60px
-  .logo-incorrect-grid
-      grid-template-columns: repeat(2, minmax(0, 1fr))
-  .logo-section-header
-    grid-template-columns: 1fr
-    gap: 24px
-
-  .logo-section-title
-    font-size: 40px
 .color-section
-  padding: 32px 32px 0
+  padding: 24px 16px 0
   display: flex
   flex-direction: column
   gap: 30px
 
-.color-section-header
-  display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
-  gap: 32px
-  align-items: start
+  +media(tablet)
+    padding: 32px 32px 0
 
-.color-section-title
+.color-section__paragraph
   margin: 0
-  font-size: 60px
-  font-weight: 500
-  line-height: 1.1
-  letter-spacing: -0.01em
 
-  span
-    color: #ff5500
-
-.color-section-description
-  color: #575757
-  font-size: 18px
-  line-height: 1.2
-
-  p
-    margin: 0
-
-  p + p
+  & + &
     margin-top: 24px
-
 .color-palettes
+  width: 100%
   display: flex
   flex-direction: column
   gap: 64px
@@ -398,41 +307,42 @@
   flex-direction: column
   gap: 40px
 
-.color-palette-title
+.color-palette__title
   margin: 0
   font-size: 22px
   font-weight: 500
   line-height: 26px
-
 .color-grid
   display: grid
-  grid-template-columns: repeat(4, minmax(0, 1fr))
+  grid-template-columns: repeat(2, minmax(0, 1fr))
   gap: 16px
 
+  +media(tablet)
+    grid-template-columns: repeat(4, minmax(0, 1fr))
 .color-card
   min-width: 0
 
-  p
-    margin: 10px 0 0
-    font-size: 12px
-    line-height: 20px
+.color-card__text
+  margin: 10px 0 0
+  font-size: 12px
+  line-height: 20px
 
 .color-circle
   width: 100%
   aspect-ratio: 1
   border-radius: 50%
 
-.color-circle-orange
+.color-circle--orange
   background-color: #fa9819
 
-.color-circle-blue-tint
+.color-circle--blue-tint
   background-color: #b6c9cf
 
-.color-circle-white
+.color-circle--white
   background-color: #ffffff
   border: 1px solid #000000
 
-.color-circle-baby-blue
+.color-circle--baby-blue
   background-color: #c6ebf7
 .color-secondary
   display: flex
@@ -442,57 +352,44 @@
   .color-grid
     row-gap: 20px
 
-.color-circle-navy
+.color-circle--navy
   background-color: #1e3d59
 
-.color-circle-caption
+.color-circle--caption
   background-color: #48749e
 
-.color-circle-sky-blue
+.color-circle--sky-blue
   background-color: #deeefe
 
-.color-circle-off-blue
+.color-circle--off-blue
   background-color: #e8ebef
 
-.color-circle-deep-orange
+.color-circle--deep-orange
   background-color: #f45f00
 
-.color-circle-black
+.color-circle--black
   background-color: #040404
 
-.color-circle-dark-grey
+.color-circle--dark-grey
   background-color: #a3a3a3
 
-.color-circle-grey
-  background-color: #e5e5e5
-
-@media (max-width: 767px)
-  .color-section
-    padding: 24px 16px 0
-
-  .color-section-header
-    grid-template-columns: 1fr
-    gap: 24px
-
-  .color-section-title
-    font-size: 40px
-
-  .color-grid
-    grid-template-columns: repeat(2, minmax(0, 1fr))
+.color-circle--grey
+  background-color: $color-border
 
 .brand-gradients
   margin-top: 40px
 
-.brand-gradients-title
+.brand-gradients__title
   margin: 0 0 24px
   font-size: 20px
   font-weight: 500
-
-.brand-gradients-grid
+.brand-gradients__grid
   display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
+  grid-template-columns: 1fr
   gap: 24px 30px
 
+  +media(tablet)
+    grid-template-columns: repeat(2, minmax(0, 1fr))
 .brand-gradient
   margin: 0
 
@@ -505,342 +402,319 @@
   figcaption
     margin-top: 8px
     font-size: 12px
-
-@media (max-width: 767px)
-  .brand-gradients-grid
-    grid-template-columns: 1fr
-
-.brand-typography
-  padding: 32px 32px 120px
-  border-top: 1px solid #e5e5e5
-
-.brand-typography-header
+.section-head
   display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
+  grid-template-columns: 1fr
+  align-items: start
   gap: 32px
+
+  +media(desktop)
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+
+.section-head__title
+  margin: 0
+  min-width: 0
+  color: $color-text
+  font-family: $font-sans
+  font-size: 36px
+  font-weight: 400
+  line-height: 1.1
+  overflow-wrap: anywhere
+
+  +media(desktop)
+    font-size: 60px
+
+.section-head__number
+  color: $color-accent
+.brand-typography
+  padding: 24px 16px 60px
+  border-top: 1px solid $color-border
+.brand-typography__header
   padding-bottom: 40px
 
-.brand-typography-title
-  margin: 0
-  font-weight: 400
-  font-size: 60px
-  line-height: 1.1
-
-  span
-    color: #ff5c00
-
-.brand-typography-content
+.brand-typography__content
   display: flex
   flex-direction: column
   gap: 40px
   min-width: 0
-  color: #555
+  color: $color-text-muted
   line-height: 1.2
   font-size: 15px
 
-  p
+.brand-typography__paragraph
     margin: 0
 
-.brand-typography-image
+.brand-typography__image
   display: block
   width: 100%
   height: auto
 
-.brand-typography-description
+.brand-typography__description
   display: flex
   flex-direction: column
   gap: 24px
 
-  span
-    color: #ff5c00
+.brand-typography__font-name
+    color: $color-accent
 .brand-typefaces
   display: flex
   flex-direction: column
   gap: 40px
-  padding: 0 32px
+  padding: 0
 
-.brand-typeface-label
+  +media(tablet)
+    padding: 0 32px
+.brand-typeface__label
   margin: 0 0 16px
   font-size: 12px
   line-height: 1.2
 
-.brand-typeface-name
+.brand-typeface__name
   margin: 0
-  font-family: "Rethink Sans", sans-serif
-  font-size: 60px
+  font-family: $font-sans
+  font-size: 36px
   font-weight: 400
   line-height: 1.3
   letter-spacing: -0.02em
   overflow-wrap: anywhere
 
-.brand-typeface-name-serif
-  font-family: "Hedvig Letters Serif", serif
-  .brand-sizing
-    margin: 100px 32px 0
-    border-top: 1px solid #e5e5e5
+  +media(tablet)
+    font-size: 60px
 
-.brand-sizing-header
+.brand-typeface__name--serif
+  font-family: $font-serif
+.sizing
+  margin: 100px 32px 0
+  border-top: $color-border
+.sizing__header
   display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
-  gap: 64px
+  grid-template-columns: 1fr
+  gap: 24px
   padding: 32px 0 40px
 
-  h3
-    margin: 0
-    font-size: 22px
-    font-weight: 400
-    line-height: 1.2
+  +media(tablet)
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+    gap: 64px
 
-  p
-    margin: 0
-    color: #555
-    font-size: 15px
-    line-height: 1.2
+.sizing__title
+  margin: 0
+  font-size: 22px
+  font-weight: 400
+  line-height: 1.2
 
-.brand-sizing-item
+.sizing__description
+  margin: 0
+  color: $color-text-muted
+  font-size: 15px
+  line-height: 1.2
+
+.sizing__item
   display: flex
   flex-direction: column
   gap: 30px
-  padding: 30px 32px 30px 0
+  padding: 30px 0
 
-.brand-sizing-text
+  +media(tablet)
+    padding-right: 32px
+
+.sizing__text
   width: 100%
   max-width: 650px
   margin: 0
-  font-family: "Rethink Sans", sans-serif
+  font-family: $font-sans
   font-weight: 400
 
-.brand-sizing-text-xl
-  font-size: 48px
+.sizing__text--xl
+  font-size: 36px
   line-height: 1
   letter-spacing: -0.02em
 
-.brand-sizing-text-lg
-  font-size: 32px
+  +media(tablet)
+    font-size: 48px
+.sizing__text--lg
+  font-size: 26px
   line-height: 1.1
   letter-spacing: -0.02em
 
-.brand-sizing-text-md
+  +media(tablet)
+    font-size: 32px
+
+.sizing__text--md
   max-width: 520px
   font-size: 20px
   line-height: 1.2
   letter-spacing: -0.01em
 
-.brand-sizing-text-sm
+.sizing__text--sm
   max-width: 520px
-  font-family: "Hedvig Letters Serif", serif
   font-size: 15px
   line-height: 1.3
   letter-spacing: normal
+  font-family: $font-serif
 
-.brand-sizing-meta
+.sizing__meta
   display: flex
+  flex-wrap: wrap
   justify-content: space-between
   gap: 16px
   padding-bottom: 8px
-  border-bottom: 1px solid #e5e5e5
-  color: #555
+  border-bottom: 1px solid $color-border
+  color: $color-text-muted
   font-size: 10px
   line-height: 1.3
 
-@media (max-width: 767px)
-  .brand-typography
-    padding: 24px 16px 60px
-
-  .brand-typography-header
-    grid-template-columns: 1fr
-
-  .brand-typography-title
-    font-size: 36px
-  .brand-typefaces
-    padding: 0
-
-  .brand-typeface-name
-    font-size: 36px
-
-  .brand-sizing
-    margin: 100px 32px 0
-    border-top: 1px solid #e5e5e5
-
-  .brand-sizing-header
-    grid-template-columns: 1fr
-    gap: 24px
-
-  .brand-sizing-item
-    padding-right: 0
-
-  .brand-sizing-text-xl
-    font-size: 36px
-
-  .brand-sizing-text-lg
-    font-size: 26px
-
-  .brand-sizing-meta
-    flex-wrap: wrap
-
+  +media(tablet)
+    flex-wrap: nowrap
 .brand-art
-  font-family: "Rethink Sans", sans-serif
+  font-family: $font-sans
+.brand-art__header
+  gap: 24px
+  padding: 24px 16px 0
+  border-top: 1px solid $color-border
 
-.brand-art-header
+  +media(tablet)
+    padding: 20px 32px 0
+
+  +media(desktop)
+    gap: 32px
+.brand-art__intro
+  margin: 0
+.brand-art__grid
   display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
+  grid-template-columns: 1fr
   align-items: start
   gap: 32px
-  padding: 20px 32px 0
-  border-top: 1px solid #e5e5e5
+  margin-top: 32px
+  padding: 0 16px
 
-.brand-art-title
-  margin: 0
-  color: #000
-  font-size: 60px
-  font-weight: 400
-  line-height: 1.1
+  +media(tablet)
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+    gap: 40px 32px
+    margin-top: 64px
+    padding: 0 32px
 
-  span
-    color: #ff5c00
-
-.brand-art-intro
-  margin: 0
-  color: #555
-  font-size: 15px
-  line-height: 1.2
-
-.brand-art-grid
-  display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
-  align-items: start
-  gap: 40px 32px
-  margin-top: 64px
-  padding: 0 32px
-
-.brand-art-card
+.brand-art__card
   display: flex
   flex-direction: column
   gap: 10px
   min-width: 0
 
-  img
-    display: block
-    width: 100%
-    height: auto
-    aspect-ratio: 467 / 295.36
-    object-fit: cover
+.brand-art__image
+  display: block
+  width: 100%
+  height: auto
+  aspect-ratio: 467 / 295
+  object-fit: cover
 
-.brand-art-description
+.brand-art__description
   display: flex
   flex-direction: column
   gap: 8px
 
-  h3
-    margin: 0
-    color: #000
-    font-size: 13px
-    font-weight: 400
-    line-height: 1.2
-
-  p
-    margin: 0
-    color: #555
-    font-size: 13px
-    line-height: 1.2
-
-@media (max-width: 767px)
-  .brand-art-header
-    grid-template-columns: 1fr
-    gap: 24px
-    padding: 24px 16px 0
-
-  .brand-art-title
-    font-size: 36px
-
-  .brand-art-grid
-    grid-template-columns: 1fr
-    gap: 32px
-    margin-top: 32px
-    padding: 0 16px
-.brand-footer
-  padding: 128px 0 32px
+.brand-art__card-title
+  margin: 0
   color: #000
-  font-family: "Rethink Sans", sans-serif
+  font-size: 13px
+  font-weight: 400
+  line-height: 1.2
 
-  a
+.brand-art__card-text
+  margin: 0
+  color: $color-text-muted
+  font-size: 13px
+  line-height: 1.2
+.brand-footer
+  padding: 64px 0 24px
+  color: $color-text
+  font-family: $font-sans
+
+  +media(tablet)
+    padding: 128px 0 32px
+
+.brand-footer__logo,
+.brand-footer__link,
+.brand-footer__legal-link
+  color: inherit
+  text-decoration: none
+
+  &:hover
     color: inherit
-    text-decoration: none
-
-    &:hover
-      text-decoration: underline
-
-.brand-footer-top
+    text-decoration: underline
+.brand-footer__top
   display: flex
-  align-items: flex-end
-  gap: 59px
-  padding: 0 40px 32px
+  flex-direction: column
+  align-items: flex-start
+  gap: 40px
+  padding: 0 16px 32px
 
-.brand-footer-logo
+  +media(tablet)
+    padding: 0 40px 32px
+
+  +media(desktop)
+    flex-direction: row
+    align-items: flex-end
+    gap: 59px
+
+.brand-footer__logo
   display: block
-  flex: 0 1 349.13px
+  flex: none
+  width: 260px
   max-width: 100%
 
-  img
-    display: block
-    width: 100%
-    height: auto
+  +media(tablet)
+    width: 349px
 
-.brand-footer-nav
+  +media(desktop)
+    flex: 0 1 349px
+
+.brand-footer__image
+  display: block
+  width: 100%
+  height: auto
+
+.brand-footer__nav
   display: flex
   flex-wrap: wrap
   align-items: center
-  gap: 20px 51px
-  padding-bottom: 2px
+  gap: 20px 24px
 
-.brand-footer-link
+  +media(tablet)
+    gap: 20px 32px
+
+.brand-footer__link
   font-size: 15px
   line-height: 1.2
 
-.brand-footer-bottom
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited
+    color: $color-text
+
+.brand-footer__bottom
   display: flex
+  flex-direction: column
   justify-content: space-between
-  align-items: center
-  gap: 16px
-  padding: 40px 40px 20px
-  border-top: 1px solid #e5e5e5
+  align-items: flex-start
+  gap: 24px
+  padding: 24px 16px 0
+  border-top: 1px solid $color-border
   font-size: 13px
   line-height: 1.2
 
-  p
-    margin: 0
+  +media(tablet)
+    flex-direction: row
+    align-items: center
+    gap: 16px
+    padding: 40px 40px 20px
 
-.brand-footer-legal
+.brand-footer__rights
+  margin: 0
+
+.brand-footer__legal
   display: flex
   flex-wrap: wrap
   align-items: center
   gap: 16px
 
-@media (max-width: 991px)
-  .brand-footer-top
-    flex-direction: column
-    align-items: flex-start
-    gap: 40px
 
-  .brand-footer-logo
-    flex: none
-    width: 349.13px
-
-@media (max-width: 767px)
-  .brand-footer
-    padding: 64px 0 24px
-
-  .brand-footer-top
-    padding: 0 16px 32px
-
-  .brand-footer-logo
-    width: 260px
-
-  .brand-footer-nav
-    gap: 20px 24px
-
-  .brand-footer-bottom
-    flex-direction: column
-    align-items: flex-start
-    gap: 24px
-    padding: 24px 16px 0
